@@ -43,7 +43,8 @@ export class CalculadoraComponent implements OnInit {
     } else {
       this.numero2 = this.concatenaNumero(this.numero2, numero);
     }
-
+  }
+  
   /**
   * Retorna o valor concatenado. Trata o separador decimal.
    * 
