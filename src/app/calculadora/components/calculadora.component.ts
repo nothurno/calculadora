@@ -69,7 +69,66 @@ export class CalculadoraComponent implements OnInit {
     }
 
     return numAtual + numConcat;
+  }
 
+  /**
+   * Executa lógica quando um operador for selecionado
+   * Caso já possua uma operação selecionada, executa a
+   * operação anterior, e define a próxima operação.
+   * 
+   * @param string operacao
+   * @return void
+   */
+  definirOperacao(operacao: string): void {
+    // apenas define operação caso  não exista uma
+    if(this.operacao === null) {
+      this.operacao = operacao;
+      return;
+    }
+  
+    /* caso operação definida e número 2 selecionado,
+      efetua o cálculo  da operação*/
+    if(this.numero2 !== null) {
+      this.resultado = this.calculadoraService.calcular(
+        parseFloat(this.numero1),
+        parseFloat(this.numero2),
+        this.operacao);
+      this.operacao = operacao;
+      this.numero1 = this.resultado.toString();
+      this.numero2 = null;
+      this.resultado = null;
+    }
+  }
+
+  /**
+  * Efetua o cálculo de uma operação.
+  * 
+  * @return void
+  */
+  calcular(): void {
+    if(this.numero2 === null) {
+      return;
+    }
+
+    this.resultado = this.calculadoraService.calcular(
+        parseFloat(this.numero1),
+        parseFloat(this.numero2),
+      this.operacao);
+  }
+
+  /**
+  * Retorna o valor a ser exibido na tela da calculadora.
+  * 
+  * return string
+  */
+  get display(): string {
+      if (this.resultado !== null) {
+        return this.resultado.toString();
+      }
+      if (this.numero2 !== null) {
+        return this.numero2;
+      }
+      return this.numero1;
   }
 
 }
